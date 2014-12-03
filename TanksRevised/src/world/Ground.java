@@ -21,7 +21,7 @@ public class Ground {
 		DirtLine initLine = new DirtLine(new Point2D.Double(0, Graphics.HEIGHT), hillGen.nextInt(Graphics.HEIGHT/3) + 20);
 		int groundMade = 0;
 		groundList.add(initLine);
-		for(int i = 0; i < width; i++) {
+		while(groundMade < width) {
 			int hillWidth = hillGen.nextInt(140) + 10;
 			DirtLine newLine = initLine;
 			for(int j = 0; j < hillWidth/3; j++) {
@@ -31,8 +31,9 @@ public class Ground {
 				Point2D.Double bottom = newLine.getBottom();
 				int length = newLine.getLength();
 				newLine = new DirtLine(bottom, length);
-				groundMade++;
-				
+				if(groundMade < width) {
+					groundMade++;
+				}
 			}
 			for(int j = 0; j < (hillWidth/3)*2; j++) {
 				newLine.getBottom().setLocation(newLine.getBottom().getX() + 1, newLine.getBottom().getY());
@@ -41,7 +42,9 @@ public class Ground {
 				Point2D.Double bottom = newLine.getBottom();
 				int length = newLine.getLength();
 				newLine = new DirtLine(bottom, length);
-				groundMade++;
+				if(groundMade < width) {
+					groundMade++;
+				}
 			}
 			for(int j = 0; j < hillWidth; j++) {
 				newLine.getBottom().setLocation(newLine.getBottom().getX() + 1, newLine.getBottom().getY());
@@ -50,19 +53,22 @@ public class Ground {
 				Point2D.Double bottom = newLine.getBottom();
 				int length = newLine.getLength();
 				newLine = new DirtLine(bottom, length);
-				groundMade++;
-				
+				if(groundMade < width) {
+					groundMade++;
+				}
 			}
-			i += groundMade;
 		}
-		
 	}
 
 	public int getWidth() {
 		return width;
 	}
 
-	public void setWidth(int width) {
+	private void setWidth(int width) {
 		this.width = width;
+	}
+	
+	public ArrayList<DirtLine> getGroundList() {
+		return groundList;
 	}
 }

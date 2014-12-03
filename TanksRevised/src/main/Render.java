@@ -3,6 +3,10 @@ package main;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+
+import world.DirtLine;
+import world.Ground;
 
 public class Render implements Runnable{
 	private Thread renderThread;
@@ -38,7 +42,19 @@ public class Render implements Runnable{
 	private void draw() {
 		BufferedImage buffer = new BufferedImage(Graphics.WIDTH, Graphics.HEIGHT, BufferedImage.TYPE_INT_ARGB);
 		Graphics2D gBuffer = (Graphics2D)buffer.getGraphics();
-		//drawStuff(gBuffer);
+		gBuffer.setColor(Color.cyan);
+		gBuffer.fillRect(0, 0, Graphics.WIDTH, Graphics.HEIGHT);
+		drawGround(gBuffer);
 		g.drawImage(buffer, 0, 0, Graphics.WIDTH, Graphics.HEIGHT, null);
+	}
+
+	private void drawGround(Graphics2D gBuffer) {
+		gBuffer.setColor(new Color(139, 69, 19));
+		Ground ground = Main.getGround();
+		ArrayList<DirtLine> groundList = ground.getGroundList();
+		for(int i = 0; i < ground.getWidth(); i++) {
+			DirtLine newDirtLine = groundList.get(i);
+			gBuffer.drawLine((int)newDirtLine.getTop().getX(), (int)newDirtLine.getTop().getY(), (int)newDirtLine.getBottom().getX(), (int)newDirtLine.getBottom().getY());
+		}
 	}
 }

@@ -1,5 +1,7 @@
 package main;
 
+import world.Ground;
+
 public class Main implements Runnable {
 	public static boolean running = true;
 	private static Main main;
@@ -7,15 +9,21 @@ public class Main implements Runnable {
 	private static Render render;
 	private Thread mainThread;
 	private static Graphics g;
+	private static Ground ground;
 	
 	
 	public static void main(String[] args) {
 		g = new Graphics(1024, 768);
 		update = new Update();
 		render = new Render(g);
+		init();
 		render.start();
 		main = new Main();
 		main.start();
+	}
+	
+	public static void init() {
+		ground = new Ground(Graphics.WIDTH);
 	}
 	
 	public synchronized void start() {
@@ -32,7 +40,7 @@ public class Main implements Runnable {
 		long lastTime = System.nanoTime();
 		double nanoPerUpdate = 1000000000D/60D;
 		double delta = 0D;
-		update.init();
+		init();
 		while(running) {
 			
 			long now = System.nanoTime();
@@ -54,5 +62,9 @@ public class Main implements Runnable {
 	
 	public static Graphics getGraphics() {
 		return g;
+	}
+	
+	public static Ground getGround() {
+		return ground;
 	}
 }
