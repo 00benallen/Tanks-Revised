@@ -7,7 +7,8 @@ import javax.swing.JFrame;
 
 public class Graphics extends JFrame{
 	private Graphics2D g;
-	private final int WIDTH, HEIGHT;
+	public static int WIDTH = 0;
+	public static int HEIGHT = 0;
 	
 	public Graphics(int width, int height) {
 		WIDTH = width; 
